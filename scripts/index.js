@@ -13,9 +13,24 @@ const todos = [
   }
 ];
 
-renderPage();
+function calculatePendingTasks() {
+  return todos.reduce((prev, todo) => {
+    return prev + (todo.status === 'pending' ? 1 : 0);
+  }, 0);
+}
 
-function renderPage() {
+renderList();
+
+function addTodo(task) {
+  if (task !== '' && task !== null) {
+    todos.push({
+      text: task,
+      status: 'pending'
+    });
+  }
+}
+
+function renderList() {
   let todoListHtml = '';
 
   todos.forEach((todo) => {
@@ -37,7 +52,7 @@ function renderPage() {
     `;
   });
 
-  console.log(todoListHtml);
+  // console.log(todoListHtml);
 
   document.querySelector('.js-todo-list')
     .innerHTML = todoListHtml;
@@ -45,14 +60,13 @@ function renderPage() {
   document.querySelector('.js-add-button')
     .addEventListener('click', () => {
       const taskInput = document.querySelector('.js-task-input');
-      const task = taskInput.value.trim();
+      const task = taskInput.value;
 
-      if (task !== '' || task !== null) {
-        todos.push({
-          text: task,
-          status: 'pending'
-        });
-        renderPage();
-      }
+      addTodo(task);
+      taskInput.value = '';
+      renderList();
     });
+
+  document.querySelector('.js-tasks-num')
+    .innerHTML = calculatePendingTasks();
 }
