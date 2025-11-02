@@ -13,8 +13,8 @@
         <img src="/assets/images/clipboard-check-solid-full.svg" alt="" />
       </header>
       <div class="input-group">
-        <input type="text" placeholder="Add your task" />
-        <button>Add Task</button>
+        <input class="js-task-input" type="text" placeholder="Add your task" />
+        <button class="js-add-button">Add Task</button>
       </div>
       <p class="tasks-info">
         You have <span class="tasks-num">3</span> task(s) to complete
@@ -27,22 +27,24 @@
         </div>
         <button>Clear All</button>
       </div>
-      <ul class="todo-list">
+      <ul class="todo-list js-todo-list">
         <li class="todo">
           <div class="todo__item">
             <input id="check-todo" type="checkbox" />
             <label for="check-todo">Edit Video</label>
           </div>
           <div class="todo__icons">
-            <svg class="icon">
+            <svg class="icon icon-edit">
               <use xlink:href="/assets/images/icons.svg#pen-solid-full"></use>
             </svg>
-            <svg class="icon">
+            <svg class="icon icon-delete">
               <use xlink:href="/assets/images/icons.svg#trash-solid-full"></use>
             </svg>
           </div>
         </li>
       </ul>
     </div>
+
+    <script src="/scripts/index.js"></script>
   </body>
 </html>

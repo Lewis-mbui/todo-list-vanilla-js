@@ -197,3 +197,8 @@ button {
   fill: orangered;
   cursor: pointer;
 }
+
+.todo.done label {
+  text-decoration: line-through;
+  color: #444;
+}
