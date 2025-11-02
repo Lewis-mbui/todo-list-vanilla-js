@@ -1,72 +1,94 @@
-const todos = [
-  {
-    text: 'Edit Video',
-    status: 'pending'
-  },
-  {
-    text: 'Upload Video',
-    status: 'pending'
-  },
-  {
-    text: 'Watch Video',
-    status: 'done'
-  }
-];
+import { todos, addTodo, allTodosHTML } from "./all-todos.js";
+import { pendingTodos, calculatePendingTasks, pendingTodosHTML } from "./pending-todos.js";
+import { completedTodos, completedTodosHTML } from "./completed-todos.js";
 
-function calculatePendingTasks() {
-  return todos.reduce((prev, todo) => {
-    return prev + (todo.status === 'pending' ? 1 : 0);
-  }, 0);
+let currentList = todos;
+
+higlightCategory();
+
+function higlightCategory() {
+  removePreviousHighlight();
+
+  if (currentList === todos)
+    document.querySelector('.js-category-1')
+      .classList.add('selected');
+  
+  if (currentList === pendingTodos)
+    document.querySelector('.js-category-2')
+      .classList.add('.selected');
+
+  if (currentList === completedTodos)
+    document.querySelector('.js-category-3')
+      .classList.add('.selected');
+
 }
 
-renderList();
-
-function addTodo(task) {
-  if (task !== '' && task !== null) {
-    todos.push({
-      text: task,
-      status: 'pending'
+function removePreviousHighlight() {
+  document.querySelectorAll('.selected')
+    .forEach((selectedCategory) => {
+      selectedCategory.classList.remove('selected');
     });
-  }
 }
+
+function setCurrentList() {
+  const selectedCategoryLink = document.querySelector('.selected');
+
+  if (selectedCategoryLink.classList.contains('js-category-1'))
+    currentList = todos;
+
+  else if (selectedCategoryLink.classList.contains('js-category-2'))
+    currentList = pendingTodos;
+
+  else if (selectedCategoryLink.classList.contains('js-category-3'))
+    currentList = completedTodos;
+}
+
+function saveListToStorage() {
+  localStorage.setItem('currentList', JSON.stringify(currentList));
+}
+
+function loadListFromStorage() {
+  return JSON.parse(localStorage.getItem('currentList'));
+}
+
+
 
 function renderList() {
   let todoListHtml = '';
 
-  todos.forEach((todo) => {
-    todoListHtml += `
-      <li class="todo">
-        <div class="todo__item">
-          <input id="check-todo" type="checkbox" />
-          <label for="check-todo">${todo.text}</label>
-        </div>
-        <div class="todo__icons">
-          <svg class="icon icon-edit">
-            <use xlink:href="/assets/images/icons.svg#pen-solid-full"></use>
-          </svg>
-          <svg class="icon icon-delete">
-            <use xlink:href="/assets/images/icons.svg#trash-solid-full"></use>
-          </svg>
-        </div>
-      </li>
-    `;
-  });
+  if (currentList === todos) todoListHtml = allTodosHTML();
+  else if (currentList === pendingTodos) todoListHtml = pendingTodosHTML();
+  else if (currentList === completedTodos) todoListHtml = completedTodosHTML();
 
   // console.log(todoListHtml);
 
   document.querySelector('.js-todo-list')
     .innerHTML = todoListHtml;
+}
 
-  document.querySelector('.js-add-button')
-    .addEventListener('click', () => {
-      const taskInput = document.querySelector('.js-task-input');
-      const task = taskInput.value;
 
-      addTodo(task);
-      taskInput.value = '';
+document.querySelector('.js-add-button')
+  .addEventListener('click', () => {
+    const taskInput = document.querySelector('.js-task-input');
+    const task = taskInput.value;
+
+    addTodo(task);
+    taskInput.value = '';
+    renderList();
+  });
+
+document.querySelector('.js-tasks-num')
+  .innerHTML = calculatePendingTasks();
+
+document.querySelectorAll('.category')
+  .forEach((categoryLink) => {
+    categoryLink.addEventListener('click', () => {
+      removePreviousHighlight();
+      categoryLink.classList.add('selected');
+      setCurrentList();
+      // console.log(currentList);
       renderList();
     });
+  });
 
-  document.querySelector('.js-tasks-num')
-    .innerHTML = calculatePendingTasks();
-}
+renderList();
