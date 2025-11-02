@@ -49,6 +49,7 @@ body {
   align-items: start;
   min-height: 100vh;
   padding-top: 10vh;
+  padding-inline: 1.6rem;
   font-size: 1rem;
   font-family: 'Poppins', sans-serif;
 }
@@ -57,6 +58,142 @@ ul {
   list-style: none;
 }
 
+h1 {
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+button {
+  font-weight: 600;
+  cursor: pointer;
+  padding: .5rem;
+  border-radius: 4px;
+  border: 0;
+  text-wrap: nowrap;
+  cursor: pointer;
+}
+
 .container {
-  background-color: white;
+  background-color: whitesmoke;
+  padding: 1.5rem;
+}
+
+.todo-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2rem;
+}
+
+.todo-header img {
+  width: 2rem;
+  aspect-ratio: 1;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  margin-bottom: 1rem;
+}
+
+.input-group input {
+  width: 100%;
+  outline: 0;
+  border: 1px solid #ddd;
+  background-color: #ccc;
+  font-size: .9rem;
+  padding: .7rem .6rem;
+  border-radius: 1.4rem;
+}
+
+
+
+.input-group button {
+  background-color: rgb(21, 211, 21);
+
+  color: white;
+  
+}
+
+.tasks-info {
+  margin-bottom: 1rem;
+}
+
+.tasks-num {
+  color: dodgerblue;
+}
+
+.tasks-nav {
+  display: flex;
+  align-items: flex-end;
+  gap: 1.5rem;
+  margin-bottom: 1.6rem;
+  justify-content: space-between;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #ccc;
+}
+
+.tasks-categories {
+  display: flex;
+  gap: 1rem;
+}
+
+.category:hover {
+  color: orangered;
+  cursor: pointer;
+  display: inline-block;
+}
+
+.category.selected {
+  color: orangered;
+}
+
+.category.selected::after {
+  content: '';
+  height: 3px;
+  width: 100%;
+  display: block;
+  background-color: orangered;
+  border-bottom-left-radius: 4px;
+  border-bottom-right-radius: 4px;
+}
+
+.tasks-nav button {
+  background-color: red;
+  color: white;
+}
+
+.todo-list {
+  display: grid;
+  gap: 1rem;
+}
+
+.todo {
+  display: flex;
+  background-color: #ccc;
+  padding: .5rem;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.todo .icon {
+  width: 1.2rem;
+  height: 1.2rem;
+}
+
+.todo__item {
+  display: flex;
+  gap: .5rem;
+  cursor: pointer;
+}
+
+.todo__item input,
+.todo__item label {
+  cursor: pointer;
+}
+
+.todo__icons .icon:hover {
+  fill: orangered;
+  cursor: pointer;
 }
