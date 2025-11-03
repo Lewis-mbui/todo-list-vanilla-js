@@ -68,16 +68,17 @@ button {
   cursor: pointer;
   padding: .5rem;
   border-radius: 4px;
+  text-wrap: nowrap;
   border: 0;
   cursor: pointer;
-  width: 100%;
+  max-width: 100%;
 }
 
 .container {
   background-color: whitesmoke;
   padding: 1.5rem;
   width: 100%;
-  max-width: 540px;
+  max-width: 440px;
   margin-inline: auto;
 }
 
@@ -140,8 +141,8 @@ button {
 
 .tasks-nav {
   display: flex;
-  align-items: center;
-  gap: .5rem;
+  align-items: flex-end;
+  gap: .8rem;
   margin-bottom: 1.6rem;
   justify-content: center;
   padding-bottom: 1rem;
