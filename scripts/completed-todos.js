@@ -1,13 +1,6 @@
-export let completedTodos = [
-  {
-    text: 'Watch Video',
-    status: 'completed'
-  },
-  {
-    text: 'Prepare Supper',
-    status: 'completed'
-  }
-];
+// completed-todos.js
+
+export let completedTodos = [];
 
 export function addCompletedTodo(todo) {
   completedTodos.push(todo);

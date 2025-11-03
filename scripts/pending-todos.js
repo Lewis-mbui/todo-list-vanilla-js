@@ -1,13 +1,6 @@
-export let pendingTodos = [
-  {
-    text: 'Edit Video',
-    status: 'pending'
-  },
-  {
-    text: 'Upload Video',
-    status: 'pending'
-  }
-];
+// pending-todos.js
+
+export let pendingTodos = [];
 
 function getTodo(task) {
   return pendingTodos.find((todo) => {

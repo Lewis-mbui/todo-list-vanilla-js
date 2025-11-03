@@ -1,23 +1,8 @@
+// all-todos.js
+
 import { pendingTodos, addToPending } from "./pending-todos.js";
 
-export let todos = [
-  {
-    text: 'Edit Video',
-    status: 'pending'
-  },
-  {
-    text: 'Upload Video',
-    status: 'pending'
-  },
-  {
-    text: 'Watch Video',
-    status: 'completed'
-  },
-  {
-    text: 'Prepare Supper',
-    status: 'completed'
-  }
-];
+export let todos = [];
 
 export function addTodo(task) {
   if (task !== '' && task !== null) {

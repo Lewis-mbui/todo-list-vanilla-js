@@ -1,3 +1,5 @@
+// index.js
+
 import { todos, addTodo, clearTodos, allTodosHTML, clearPendingFromAll, clearCompletedFromAll, completeTodo, resetTodo, editTodo, removeFromTodos } from "./all-todos.js";
 import { pendingTodos, calculatePendingTasks, pendingTodosHTML, clearPendingTodos, addToPending, removeFromPending, editPendingTodo} from "./pending-todos.js";
 import { completedTodos, completedTodosHTML, clearCompletedTodos, addToCompleted, removeFromCompleted } from "./completed-todos.js";
@@ -5,43 +7,48 @@ import { completedTodos, completedTodosHTML, clearCompletedTodos, addToCompleted
 let currentList = todos;
 let timeoutId;
 
-function updatePendingTasksIndicator() {
-  document.querySelector('.js-tasks-num')
-  .innerHTML = calculatePendingTasks();
+loadAppState(); // load saved todos and category
+higlightCategory();
+renderList();
+updatePendingTasksIndicator();
+
+function saveAppState() {
+  const state = {
+    todos,
+    pendingTodos,
+    completedTodos,
+    currentCategory: document.querySelector('.selected')?.textContent || 'All'
+  };
+  localStorage.setItem('todoAppState', JSON.stringify(state));
 }
 
-function showAddedMessage() {
-  document.querySelector('.js-added-message')
-    .classList.add('is-added');
-}
+function loadAppState() {
+  const savedState = JSON.parse(localStorage.getItem('todoAppState'));
 
-function hideAddedMessage() {
-  document.querySelector('.is-added')
-    .classList.remove('is-added');
-}
+  if (savedState) {
+    // Restore arrays
+    todos.length = 0;
+    pendingTodos.length = 0;
+    completedTodos.length = 0;
 
-function higlightCategory() {
-  removePreviousHighlight();
+    todos.push(...savedState.todos);
+    pendingTodos.push(...savedState.pendingTodos);
+    completedTodos.push(...savedState.completedTodos);
 
-  if (currentList === todos)
-    document.querySelector('.js-category-1')
-      .classList.add('selected');
-  
-  if (currentList === pendingTodos)
-    document.querySelector('.js-category-2')
-      .classList.add('.selected');
+    // Restore category selection
+    removePreviousHighlight();
+    const categoryText = savedState.currentCategory;
+    const categories = document.querySelectorAll('.category');
 
-  if (currentList === completedTodos)
-    document.querySelector('.js-category-3')
-      .classList.add('.selected');
-
-}
-
-function removePreviousHighlight() {
-  document.querySelectorAll('.selected')
-    .forEach((selectedCategory) => {
-      selectedCategory.classList.remove('selected');
+    categories.forEach(cat => {
+      if (cat.textContent.trim() === categoryText) {
+        cat.classList.add('selected');
+      }
     });
+
+    // Set the correct currentList reference
+    setCurrentList();
+  }
 }
 
 function setCurrentList() {
@@ -57,14 +64,45 @@ function setCurrentList() {
     currentList = completedTodos;
 }
 
-function saveListToStorage() {
-  localStorage.setItem('currentList', JSON.stringify(currentList));
+
+function higlightCategory() {
+  removePreviousHighlight();
+
+  const savedState = JSON.parse(localStorage.getItem('todoAppState'));
+  const savedCategory = savedState?.currentCategory;
+
+  if (savedCategory) {
+    document.querySelectorAll('.category').forEach(cat => {
+      if (cat.textContent.trim() === savedCategory) {
+        cat.classList.add('selected');
+      }
+    });
+  } else {
+    document.querySelector('.js-category-1').classList.add('selected');
+  }
 }
 
-function loadListFromStorage() {
-  return JSON.parse(localStorage.getItem('currentList'));
+function removePreviousHighlight() {
+  document.querySelectorAll('.selected')
+    .forEach((selectedCategory) => {
+      selectedCategory.classList.remove('selected');
+    });
 }
 
+function updatePendingTasksIndicator() {
+  document.querySelector('.js-tasks-num')
+  .innerHTML = calculatePendingTasks();
+}
+
+function showAddedMessage() {
+  document.querySelector('.js-added-message')
+    .classList.add('is-added');
+}
+
+function hideAddedMessage() {
+  document.querySelector('.is-added')
+    .classList.remove('is-added');
+}
 
 function renderList() {
   let todoListHtml = '';
@@ -89,14 +127,14 @@ function renderList() {
           completeTodo(task);
           removeFromPending(task);
           addToCompleted(task);
-          renderList();
         } else {
           resetTodo(task);
           addToPending(task);
           removeFromCompleted(task);
-          renderList();
         }
+        renderList();
         updatePendingTasksIndicator();
+        saveAppState();
       });
     });
 
@@ -127,6 +165,7 @@ function renderList() {
         }
         todoContainer.classList.remove('is-editing');
         renderList();
+        saveAppState();
       });
     });
 
@@ -142,12 +181,10 @@ function renderList() {
         setCurrentList();
         updatePendingTasksIndicator();
         renderList();
+        saveAppState();
       });
     });
 }
-
-higlightCategory();
-renderList();
 
 document.querySelector('.js-add-button')
   .addEventListener('click', () => {
@@ -166,6 +203,7 @@ document.querySelector('.js-add-button')
       }, 1000);
       updatePendingTasksIndicator();
       renderList();
+      saveAppState();
     }
     taskInput.value = '';
   });
@@ -178,6 +216,7 @@ document.querySelectorAll('.category')
       setCurrentList();
       // console.log(currentList);
       renderList();
+      saveAppState();
     });
   });
 
@@ -196,6 +235,7 @@ document.querySelector('.js-clear-button')
       renderList();
     }
     updatePendingTasksIndicator();
+    saveAppState();
   });
 
   updatePendingTasksIndicator();
