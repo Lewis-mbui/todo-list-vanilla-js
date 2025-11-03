@@ -9,9 +9,16 @@ export let pendingTodos = [
   }
 ];
 
-export function removeFromPending() {
+export function removeFromPending(task) {
   pendingTodos = pendingTodos.filter((todo) => {
-    return todo.status === 'pending';
+    return todo.text !== task;
+  });
+}
+
+export function addToPending(task) {
+  pendingTodos.push({
+    text: task,
+    status: 'pending'
   });
 }
 

@@ -1,4 +1,4 @@
-import { pendingTodos } from "./pending-todos.js";
+import { pendingTodos, addToPending } from "./pending-todos.js";
 
 export let todos = [
   {
@@ -26,10 +26,7 @@ export function addTodo(task) {
       status: 'pending'
     });
     
-    pendingTodos.push({
-      text: task,
-      status: 'pending'
-    });
+    addToPending(task);
   }
 }
 

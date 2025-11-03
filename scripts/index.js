@@ -1,5 +1,5 @@
 import { todos, addTodo, clearTodos, allTodosHTML, clearPendingFromAll, clearCompletedFromAll, completeTodo, resetTodo } from "./all-todos.js";
-import { pendingTodos, calculatePendingTasks, pendingTodosHTML, clearPendingTodos} from "./pending-todos.js";
+import { pendingTodos, calculatePendingTasks, pendingTodosHTML, clearPendingTodos, addToPending, removeFromPending} from "./pending-todos.js";
 import { completedTodos, completedTodosHTML, clearCompletedTodos, addToCompleted, removeFromCompleted } from "./completed-todos.js";
 
 let currentList = todos;
@@ -82,10 +82,12 @@ function renderList() {
 
         if (checkbox.checked) {
           completeTodo(task);
+          removeFromPending(task);
           addToCompleted(task);
           renderList();
         } else {
           resetTodo(task);
+          addToPending(task);
           removeFromCompleted(task);
           renderList();
         }
