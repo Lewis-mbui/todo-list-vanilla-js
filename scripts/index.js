@@ -1,9 +1,14 @@
-import { todos, addTodo, clearTodos, allTodosHTML, clearPendingFromAll, clearCompletedFromAll, completeTodo, resetTodo, editTodo } from "./all-todos.js";
+import { todos, addTodo, clearTodos, allTodosHTML, clearPendingFromAll, clearCompletedFromAll, completeTodo, resetTodo, editTodo, removeFromTodos } from "./all-todos.js";
 import { pendingTodos, calculatePendingTasks, pendingTodosHTML, clearPendingTodos, addToPending, removeFromPending, editPendingTodo} from "./pending-todos.js";
 import { completedTodos, completedTodosHTML, clearCompletedTodos, addToCompleted, removeFromCompleted } from "./completed-todos.js";
 
 let currentList = todos;
 let timeoutId;
+
+function updatePendingTasksIndicator() {
+  document.querySelector('.js-tasks-num')
+  .innerHTML = calculatePendingTasks();
+}
 
 function showAddedMessage() {
   document.querySelector('.js-added-message')
@@ -91,6 +96,7 @@ function renderList() {
           removeFromCompleted(task);
           renderList();
         }
+        updatePendingTasksIndicator();
       });
     });
 
@@ -123,6 +129,21 @@ function renderList() {
         renderList();
       });
     });
+
+  document.querySelectorAll('.js-delete-icon')
+    .forEach((icon) => {
+      icon.addEventListener('click', () => {
+        const task = icon.parentElement.parentElement
+          .querySelector('label').innerText;
+
+        removeFromTodos(task);
+        removeFromPending(task);
+        removeFromCompleted(task);
+        setCurrentList();
+        updatePendingTasksIndicator();
+        renderList();
+      });
+    });
 }
 
 higlightCategory();
@@ -142,14 +163,12 @@ document.querySelector('.js-add-button')
       clearTimeout(timeoutId);
       timeoutId = setTimeout(() => {
         hideAddedMessage();
-      }, 1000)
+      }, 1000);
+      updatePendingTasksIndicator();
       renderList();
     }
     taskInput.value = '';
   });
-
-document.querySelector('.js-tasks-num')
-  .innerHTML = calculatePendingTasks();
 
 document.querySelectorAll('.category')
   .forEach((categoryLink) => {
@@ -176,4 +195,7 @@ document.querySelector('.js-clear-button')
       clearCompletedFromAll();
       renderList();
     }
+    updatePendingTasksIndicator();
   });
+
+  updatePendingTasksIndicator();

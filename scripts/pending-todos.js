@@ -51,7 +51,7 @@ export function pendingTodosHTML() {
           <label for="check-todo">${todo.text}</label>
         </div>
         <div class="todo__icons">
-          <svg class="icon icon-delete">
+          <svg class="icon icon-delete js-delete-icon">
             <use xlink:href="/assets/images/icons.svg#trash-solid-full"></use>
           </svg>
         </div>

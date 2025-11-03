@@ -41,6 +41,12 @@ export function clearTodos() {
   pendingTodos.length = 0;
 }
 
+export function removeFromTodos(task) {
+  todos = todos.filter((todo) => {
+    return todo.text !== task;
+  });
+}
+
 export function clearPendingFromAll() {
   todos = todos.filter((todo) => {
     return todo.status !== 'pending';
@@ -73,7 +79,7 @@ export function allTodosHTML() {
 
   todos.forEach((todo) => {
     html += `
-      <li class="todo is-editin">
+      <li class="todo">
         <div class="todo__item ${todo.status === 'completed' ? 'done' : ''}">
           <input ${todo.status === 'completed' ? 'checked' : ''} class="js-check-task" id="check-todo" type="checkbox" />
           <label for="check-todo">${todo.text}</label>
@@ -86,7 +92,7 @@ export function allTodosHTML() {
             `
             : 
             ''}
-          <svg class="icon icon-delete">
+          <svg class="icon js-delete-icon icon-delete">
             <use xlink:href="/assets/images/icons.svg#trash-solid-full"></use>
           </svg>
         </div>
