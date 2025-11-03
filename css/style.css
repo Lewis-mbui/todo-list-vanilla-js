@@ -94,7 +94,7 @@ button {
   display: flex;
   align-items: center;
   gap: .4rem;
-  margin-bottom: 1rem;
+  margin-bottom: .3rem;
 }
 
 .input-group input {
@@ -107,17 +107,28 @@ button {
   border-radius: 1.4rem;
 }
 
-
-
 .input-group button {
   background-color: rgb(21, 211, 21);
-
   color: white;
-  
+}
+
+.input-group button:hover {
+  background-color: rgb(93, 207, 93);
+}
+
+.added-message {
+  color: green;
+  padding-left: .5rem;
+  font-size: .9rem;
+  display: none;
+}
+
+.added-message.is-added {
+  display: initial;
 }
 
 .tasks-info {
-  margin-bottom: 1rem;
+  margin-bottom: .8rem;
 }
 
 .tasks-num {
@@ -162,6 +173,10 @@ button {
 .tasks-nav button {
   background-color: red;
   color: white;
+}
+
+.tasks-nav button:hover {
+  background-color: rgb(247, 52, 52);
 }
 
 .todo-list {

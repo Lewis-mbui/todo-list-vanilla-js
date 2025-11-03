@@ -3,6 +3,17 @@ import { pendingTodos, calculatePendingTasks, pendingTodosHTML, clearPendingTodo
 import { completedTodos, completedTodosHTML, clearCompletedTodos } from "./completed-todos.js";
 
 let currentList = todos;
+let timeoutId;
+
+function showAddedMessage() {
+  document.querySelector('.js-added-message')
+    .classList.add('is-added');
+}
+
+function hideAddedMessage() {
+  document.querySelector('.is-added')
+    .classList.remove('is-added');
+}
 
 function higlightCategory() {
   removePreviousHighlight();
@@ -70,10 +81,20 @@ document.querySelector('.js-add-button')
   .addEventListener('click', () => {
     const taskInput = document.querySelector('.js-task-input');
     const task = taskInput.value;
+    const length = todos.length;
+    const isAdded = false;
 
     addTodo(task);
+    const currentLength = todos.length;
+    if (currentLength > length) {
+      showAddedMessage();
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(() => {
+        hideAddedMessage();
+      }, 1000)
+      renderList();
+    }
     taskInput.value = '';
-    renderList();
   });
 
 document.querySelector('.js-tasks-num')
