@@ -63,6 +63,11 @@ export function resetTodo(task) {
   todo.status = 'pending';
 }
 
+export function editTodo(previousTask, task) {
+  const todo = getTodo(previousTask);
+  todo.text = task;
+}
+
 export function allTodosHTML() {
   let html = '';
 
@@ -82,8 +87,8 @@ export function allTodosHTML() {
           </svg>
         </div>
         <div class="edit-group">
-          <input/>
-          <span class="done-link">Done</>
+          <input class="js-edited-task"/>
+          <span class="done-link js-done-link">Done</>
         </div>
       </li>
     `;

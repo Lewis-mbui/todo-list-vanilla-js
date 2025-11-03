@@ -1,5 +1,5 @@
-import { todos, addTodo, clearTodos, allTodosHTML, clearPendingFromAll, clearCompletedFromAll, completeTodo, resetTodo } from "./all-todos.js";
-import { pendingTodos, calculatePendingTasks, pendingTodosHTML, clearPendingTodos, addToPending, removeFromPending} from "./pending-todos.js";
+import { todos, addTodo, clearTodos, allTodosHTML, clearPendingFromAll, clearCompletedFromAll, completeTodo, resetTodo, editTodo } from "./all-todos.js";
+import { pendingTodos, calculatePendingTasks, pendingTodosHTML, clearPendingTodos, addToPending, removeFromPending, editPendingTodo} from "./pending-todos.js";
 import { completedTodos, completedTodosHTML, clearCompletedTodos, addToCompleted, removeFromCompleted } from "./completed-todos.js";
 
 let currentList = todos;
@@ -99,6 +99,30 @@ function renderList() {
       icon.addEventListener('click', () => {
         const todoContainer = icon.parentElement.parentElement;
         todoContainer.classList.add('is-editing');
+      });
+    });
+
+  document.querySelectorAll('.js-done-link')
+    .forEach((link) => {
+      link.addEventListener('click', () => {
+        const inputElement = link.parentElement
+          .querySelector('input');
+        const todoContainer = link.parentElement.parentElement;
+        const labelElement = link.parentElement.parentElement
+          .querySelector('label');
+
+        const previousTask = labelElement.innerText;
+
+        const task = inputElement.value;
+
+        if (task !== '' && task !== null) {
+          editTodo(previousTask, task);
+          editPendingTodo(previousTask, task);
+          console.log(todoContainer);
+          todoContainer.classList.remove('is-editing');
+          renderList();
+        }
+
       });
     });
 }

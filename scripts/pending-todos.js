@@ -9,6 +9,12 @@ export let pendingTodos = [
   }
 ];
 
+function getTodo(task) {
+  return pendingTodos.find((todo) => {
+    return todo.text === task;
+  });
+}
+
 export function removeFromPending(task) {
   pendingTodos = pendingTodos.filter((todo) => {
     return todo.text !== task;
@@ -28,6 +34,11 @@ export function calculatePendingTasks() {
 
 export function clearPendingTodos() {
   pendingTodos.length = 0;
+}
+
+export function editPendingTodo(previousTask, task) {
+  const todo = getTodo(previousTask);
+  todo.text = task;
 }
 
 export function pendingTodosHTML() {
