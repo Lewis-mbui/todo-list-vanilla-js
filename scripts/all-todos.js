@@ -79,9 +79,13 @@ export function allTodosHTML() {
           <label for="check-todo">${todo.text}</label>
         </div>
         <div class="todo__icons">
-          <svg class="icon icon-edit js-icon-edit">
-            <use xlink:href="/assets/images/icons.svg#pen-solid-full"></use>
-          </svg>
+          ${todo.status === 'pending' ? `
+            <svg class="icon icon-edit js-icon-edit">
+              <use xlink:href="/assets/images/icons.svg#pen-solid-full"></use>
+            </svg>
+            `
+            : 
+            ''}
           <svg class="icon icon-delete">
             <use xlink:href="/assets/images/icons.svg#trash-solid-full"></use>
           </svg>
