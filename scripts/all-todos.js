@@ -68,18 +68,22 @@ export function allTodosHTML() {
 
   todos.forEach((todo) => {
     html += `
-      <li class="todo">
+      <li class="todo is-editin">
         <div class="todo__item ${todo.status === 'completed' ? 'done' : ''}">
           <input ${todo.status === 'completed' ? 'checked' : ''} class="js-check-task" id="check-todo" type="checkbox" />
           <label for="check-todo">${todo.text}</label>
         </div>
         <div class="todo__icons">
-          <svg class="icon icon-edit">
+          <svg class="icon icon-edit js-icon-edit">
             <use xlink:href="/assets/images/icons.svg#pen-solid-full"></use>
           </svg>
           <svg class="icon icon-delete">
             <use xlink:href="/assets/images/icons.svg#trash-solid-full"></use>
           </svg>
+        </div>
+        <div class="edit-group">
+          <input/>
+          <span class="done-link">Done</>
         </div>
       </li>
     `;

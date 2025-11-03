@@ -93,6 +93,14 @@ function renderList() {
         }
       });
     });
+
+  document.querySelectorAll('.js-icon-edit')
+    .forEach((icon) => {
+      icon.addEventListener('click', () => {
+        const todoContainer = icon.parentElement.parentElement;
+        todoContainer.classList.add('is-editing');
+      });
+    });
 }
 
 higlightCategory();

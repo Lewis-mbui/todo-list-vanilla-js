@@ -197,6 +197,42 @@ button {
   height: 1.2rem;
 }
 
+.todo .edit-group {
+  display: none;
+}
+
+.todo.is-editing .todo__item,
+.todo.is-editing .todo__icons {
+  display: none;
+}
+
+.todo.is-editing .edit-group {
+  display: flex;
+}
+
+.edit-group {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 1rem;
+}
+
+.edit-group input {
+  width: 100%;
+  outline: none;
+  padding: .5rem;
+  font-size: .9rem;
+}
+
+.edit-group span {
+  color: dodgerblue;
+  cursor: pointer;
+}
+
+.edit-group span:hover {
+  color: orangered;
+}
+
 .todo__item {
   display: flex;
   gap: .5rem;
