@@ -213,7 +213,7 @@ button {
   cursor: pointer;
 }
 
-.todo.done label {
+.todo__item.done label {
   text-decoration: line-through;
   color: #444;
 }

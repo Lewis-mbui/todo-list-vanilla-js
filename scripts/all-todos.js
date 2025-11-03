@@ -33,6 +33,12 @@ export function addTodo(task) {
   }
 }
 
+function getTodo(task) {
+  return todos.find((todo) => {
+    return todo.text === task;
+  });
+}
+
 export function clearTodos() {
   todos.length = 0;
   pendingTodos.length = 0;
@@ -50,14 +56,24 @@ export function clearCompletedFromAll() {
   });
 }
 
+export function completeTodo(task) {
+  const todo = getTodo(task);
+  todo.status = 'completed';
+}
+
+export function resetTodo(task) {
+  const todo = getTodo(task);
+  todo.status = 'pending';
+}
+
 export function allTodosHTML() {
   let html = '';
 
   todos.forEach((todo) => {
     html += `
       <li class="todo">
-        <div class="todo__item">
-          <input id="check-todo" type="checkbox" />
+        <div class="todo__item ${todo.status === 'completed' ? 'done' : ''}">
+          <input ${todo.status === 'completed' ? 'checked' : ''} class="js-check-task" id="check-todo" type="checkbox" />
           <label for="check-todo">${todo.text}</label>
         </div>
         <div class="todo__icons">

@@ -1,6 +1,6 @@
-import { todos, addTodo, clearTodos, allTodosHTML, clearPendingFromAll, clearCompletedFromAll } from "./all-todos.js";
+import { todos, addTodo, clearTodos, allTodosHTML, clearPendingFromAll, clearCompletedFromAll, completeTodo, resetTodo } from "./all-todos.js";
 import { pendingTodos, calculatePendingTasks, pendingTodosHTML, clearPendingTodos} from "./pending-todos.js";
-import { completedTodos, completedTodosHTML, clearCompletedTodos } from "./completed-todos.js";
+import { completedTodos, completedTodosHTML, clearCompletedTodos, addToCompleted, removeFromCompleted } from "./completed-todos.js";
 
 let currentList = todos;
 let timeoutId;
@@ -72,6 +72,25 @@ function renderList() {
 
   document.querySelector('.js-todo-list')
     .innerHTML = todoListHtml;
+
+   document.querySelectorAll('.js-check-task')
+    .forEach((checkbox) => {
+      checkbox.addEventListener('click', () => {
+        const todoElement = checkbox.parentElement;
+        const task = todoElement.querySelector('label')
+          .innerText.trim();
+
+        if (checkbox.checked) {
+          completeTodo(task);
+          addToCompleted(task);
+          renderList();
+        } else {
+          resetTodo(task);
+          removeFromCompleted(task);
+          renderList();
+        }
+      });
+    });
 }
 
 higlightCategory();

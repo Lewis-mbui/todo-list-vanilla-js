@@ -1,4 +1,4 @@
-export const completedTodos = [
+export let completedTodos = [
   {
     text: 'Watch Video',
     status: 'completed'
@@ -13,8 +13,27 @@ export function addCompletedTodo(todo) {
   completedTodos.push(todo);
 }
 
+function getTodo(task) {
+  return completedTodos.find((todo) => {
+    return todo.text === task;
+  });
+}
+
 export function clearCompletedTodos() {
   completedTodos.length = 0;
+}
+
+export function removeFromCompleted(task) {
+  completedTodos = completedTodos.filter((todo) => {
+    return todo.text !== task;
+  });
+}
+
+export function addToCompleted(task) {
+  completedTodos.push({
+    text: task,
+    status: 'completed'
+  });
 }
 
 export function completedTodosHTML() {
