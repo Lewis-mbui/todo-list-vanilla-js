@@ -12,6 +12,10 @@ export let todos = [
   {
     text: 'Watch Video',
     status: 'completed'
+  },
+  {
+    text: 'Prepare Supper',
+    status: 'completed'
   }
 ];
 
@@ -27,6 +31,23 @@ export function addTodo(task) {
       status: 'pending'
     });
   }
+}
+
+export function clearTodos() {
+  todos.length = 0;
+  pendingTodos.length = 0;
+}
+
+export function clearPendingFromAll() {
+  todos = todos.filter((todo) => {
+    return todo.status !== 'pending';
+  });
+}
+
+export function clearCompletedFromAll() {
+  todos = todos.filter((todo) => {
+    return todo.status !== 'completed';
+  });
 }
 
 export function allTodosHTML() {

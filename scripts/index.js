@@ -1,10 +1,8 @@
-import { todos, addTodo, allTodosHTML } from "./all-todos.js";
-import { pendingTodos, calculatePendingTasks, pendingTodosHTML } from "./pending-todos.js";
-import { completedTodos, completedTodosHTML } from "./completed-todos.js";
+import { todos, addTodo, clearTodos, allTodosHTML, clearPendingFromAll, clearCompletedFromAll } from "./all-todos.js";
+import { pendingTodos, calculatePendingTasks, pendingTodosHTML, clearPendingTodos} from "./pending-todos.js";
+import { completedTodos, completedTodosHTML, clearCompletedTodos } from "./completed-todos.js";
 
 let currentList = todos;
-
-higlightCategory();
 
 function higlightCategory() {
   removePreviousHighlight();
@@ -52,7 +50,6 @@ function loadListFromStorage() {
 }
 
 
-
 function renderList() {
   let todoListHtml = '';
 
@@ -66,6 +63,8 @@ function renderList() {
     .innerHTML = todoListHtml;
 }
 
+higlightCategory();
+renderList();
 
 document.querySelector('.js-add-button')
   .addEventListener('click', () => {
@@ -91,4 +90,18 @@ document.querySelectorAll('.category')
     });
   });
 
-renderList();
+document.querySelector('.js-clear-button')
+  .addEventListener('click', () => {
+    if (currentList === todos) {
+      clearTodos();
+      renderList();
+    } else if (currentList === pendingTodos) {
+      clearPendingTodos();
+      clearPendingFromAll();
+      renderList();
+    } else if (currentList === completedTodos) {
+      clearCompletedTodos();
+      clearCompletedFromAll();
+      renderList();
+    }
+  });

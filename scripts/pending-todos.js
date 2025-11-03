@@ -19,6 +19,10 @@ export function calculatePendingTasks() {
   return pendingTodos.length;
 }
 
+export function clearPendingTodos() {
+  pendingTodos.length = 0;
+}
+
 export function pendingTodosHTML() {
   let html = '';
 

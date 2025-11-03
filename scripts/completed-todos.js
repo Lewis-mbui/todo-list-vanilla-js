@@ -2,11 +2,19 @@ export const completedTodos = [
   {
     text: 'Watch Video',
     status: 'completed'
+  },
+  {
+    text: 'Prepare Supper',
+    status: 'completed'
   }
 ];
 
 export function addCompletedTodo(todo) {
   completedTodos.push(todo);
+}
+
+export function clearCompletedTodos() {
+  completedTodos.length = 0;
 }
 
 export function completedTodosHTML() {
