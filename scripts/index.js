@@ -118,11 +118,9 @@ function renderList() {
         if (task !== '' && task !== null) {
           editTodo(previousTask, task);
           editPendingTodo(previousTask, task);
-          console.log(todoContainer);
-          todoContainer.classList.remove('is-editing');
-          renderList();
         }
-
+        todoContainer.classList.remove('is-editing');
+        renderList();
       });
     });
 }
