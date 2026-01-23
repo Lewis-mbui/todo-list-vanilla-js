@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,31 +7,60 @@
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
-    <div class="container">
+    <div class="container" id="app">
       <header class="todo-header">
         <h1>ToDo List</h1>
         <img src="/assets/images/clipboard-check-solid-full.svg" alt="" />
       </header>
-      <div class="input-group">
-        <input class="js-task-input" type="text" placeholder="Add your task" />
-        <button class="js-add-button">Add Task</button>
+
+      <div class="input-group" role="form" aria-label="Add task">
+        <input
+          id="task-input"
+          class="js-task-input"
+          type="text"
+          placeholder="Add your task"
+        />
+        <button id="add-button" class="js-add-button" aria-label="Add task">
+          Add Task
+        </button>
       </div>
-      <p class="added-message js-added-message">Task added!</p>
+
+      <p
+        class="added-message js-added-message"
+        id="added-message"
+        aria-live="polite"
+      >
+        Task added!
+      </p>
+
       <p class="tasks-info">
-        You have <span class="tasks-num js-tasks-num"></span> task(s) to
+        You have
+        <span class="tasks-num js-tasks-num" id="tasks-num">0</span> task(s) to
         complete
       </p>
-      <div class="tasks-nav">
-        <div class="tasks-categories">
-          <p class="category js-category-1">All</p>
-          <p class="category js-category-2">Pending</p>
-          <p class="category js-category-3">Completed</p>
+
+      <div class="tasks-nav" role="navigation" aria-label="Task filters">
+        <div class="tasks-categories" role="tablist">
+          <button class="category js-category" data-filter="all" role="tab">
+            All
+          </button>
+          <button class="category js-category" data-filter="pending" role="tab">
+            Pending
+          </button>
+          <button
+            class="category js-category"
+            data-filter="completed"
+            role="tab"
+          >
+            Completed
+          </button>
         </div>
-        <button class="js-clear-button">Clear All</button>
+        <button class="js-clear-button" id="clear-button">Clear All</button>
       </div>
-      <ul class="todo-list js-todo-list"></ul>
+
+      <ul class="todo-list js-todo-list" id="todo-list" aria-live="polite"></ul>
     </div>
 
-    <script type="module" src="/scripts/index.js"></script>
+    <script type="module" src="/scripts/app.js"></script>
   </body>
 </html>
